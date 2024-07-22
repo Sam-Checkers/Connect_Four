@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Piece.css';
 
-const Piece = () => {
-  const [placed, setPlaced] = useState(false);
-
-  const handleClick = () => {
-    setPlaced(true);
-  };
-
-  return (
-    <div className={`piece ${placed ? 'placed' : ''}`} onClick={handleClick}>
-      {placed && <div className="piece-content"></div>}
-    </div>
-  );
-};
+class Piece extends React.Component {
+  render() {
+    return (
+      <div className="piece"></div>
+    );
+  }
+}
 
 export default Piece;

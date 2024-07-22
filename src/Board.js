@@ -1,8 +1,11 @@
 import React from 'react';
 import './Board.css';
-import Piece from './Piece';
 
 class Board extends React.Component {
+  handleCellClick = (rowNumber, columnNumber) => {
+    console.log('Clicked on row:', rowNumber, 'column:', columnNumber);
+  }
+
   render() {
     const boardSize = 6;
     const board = [];
@@ -11,12 +14,21 @@ class Board extends React.Component {
       const row = [];
       for (let j = 0; j < boardSize; j++) {
         row.push(
-          <div key={`${i}-${j}`} className="cell">
-            <Piece /> {}
-          </div>
+          <div 
+            key={`${i}-${j}`} 
+            className="cell"
+            onClick={() => this.handleCellClick(i, j)}
+          ></div>
         );
       }
-      board.push(<div key={i} className="row">{row}</div>);
+      board.push(
+        <div 
+          key={i} 
+          className="row"
+        >
+          {row}
+        </div>
+      );
     }
 
     return (
