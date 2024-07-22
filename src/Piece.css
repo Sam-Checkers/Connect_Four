@@ -1,0 +1,18 @@
+.piece {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .piece.placed {
+    pointer-events: none;
+  }
+
+  .piece-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #2abe36;
+    position: absolute;
+  }
+  
