@@ -12,16 +12,22 @@ class Board extends React.Component {
 
   handleCellClick = (rowNumber) => {
     const { pieceLocations } = this.state;
-    const newLocation = { row: rowNumber, column: 5 };
+    let newLocation;
 
-    const isColumn5Occupied = pieceLocations.some(location => location.column === 5);
-
-    if (isColumn5Occupied) {
-      const newLocationColumn4 = { row: rowNumber, column: 4 };
-      this.setState(prevState => ({
-        pieceLocations: [...prevState.pieceLocations, newLocationColumn4]
-      }));
-    } else {
+    if (!pieceLocations.some(location => location.row === rowNumber && location.column === 5)) {
+      newLocation = { row: rowNumber, column: 5 };
+    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 4)) {
+      newLocation = { row: rowNumber, column: 4 };
+    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 3)) {
+      newLocation = { row: rowNumber, column: 3 };
+    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 2)) {
+    newLocation = { row: rowNumber, column: 2 };
+    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 1)) {
+    newLocation = { row: rowNumber, column: 1 };
+    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 0)) {
+    newLocation = { row: rowNumber, column: 0 };
+    }
+    if (newLocation) {
       this.setState(prevState => ({
         pieceLocations: [...prevState.pieceLocations, newLocation]
       }));
