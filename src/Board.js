@@ -2,8 +2,8 @@ import React from 'react';
 import './Board.css';
 
 class Board extends React.Component {
-  handleCellClick = (rowNumber, columnNumber) => {
-    console.log('Clicked on row:', rowNumber, 'column:', columnNumber);
+  handleCellClick = (rowNumber) => {
+    console.log('Clicked on row:', rowNumber, 'bottom column:', 5);
   }
 
   render() {
@@ -17,7 +17,7 @@ class Board extends React.Component {
           <div 
             key={`${i}-${j}`} 
             className="cell"
-            onClick={() => this.handleCellClick(i, j)}
+            onClick={() => this.handleCellClick(i)}
           ></div>
         );
       }
