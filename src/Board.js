@@ -14,7 +14,14 @@ class Board extends React.Component {
     const { pieceLocations } = this.state;
     const newLocation = { row: rowNumber, column: 5 };
 
-    if (!pieceLocations.some(location => location.row === newLocation.row && location.column === newLocation.column)) {
+    const isColumn5Occupied = pieceLocations.some(location => location.column === 5);
+
+    if (isColumn5Occupied) {
+      const newLocationColumn4 = { row: rowNumber, column: 4 };
+      this.setState(prevState => ({
+        pieceLocations: [...prevState.pieceLocations, newLocationColumn4]
+      }));
+    } else {
       this.setState(prevState => ({
         pieceLocations: [...prevState.pieceLocations, newLocation]
       }));
