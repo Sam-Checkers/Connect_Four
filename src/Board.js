@@ -6,12 +6,19 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pieceLocation: null
+      pieceLocations: []
     };
   }
 
   handleCellClick = (rowNumber) => {
-    this.setState({ pieceLocation: { row: rowNumber, column: 5 } });
+    const { pieceLocations } = this.state;
+    const newLocation = { row: rowNumber, column: 5 };
+
+    if (!pieceLocations.some(location => location.row === newLocation.row && location.column === newLocation.column)) {
+      this.setState(prevState => ({
+        pieceLocations: [...prevState.pieceLocations, newLocation]
+      }));
+    }
   }
 
   render() {
@@ -28,7 +35,12 @@ class Board extends React.Component {
             onClick={() => this.handleCellClick(i)}
           >
             {}
-            {this.state.pieceLocation && this.state.pieceLocation.row === i && this.state.pieceLocation.column === j && <Piece />}
+            {this.state.pieceLocations.map((location, index) => {
+              if (location.row === i && location.column === j) {
+                return <Piece key={index} />;
+              }
+              return null;
+            })}
           </div>
         );
       }
