@@ -15,7 +15,7 @@ class Board extends React.Component {
   handleCellClick = (rowNumber, isComputerPiece) => {
     const { pieceLocations, computerPieceLocations } = this.state;
     let newLocation;
-
+  
     for (let column = 5; column >= 0; column--) {
       if (!pieceLocations.some(location => location.row === rowNumber && location.column === column) &&
           !computerPieceLocations.some(location => location.row === rowNumber && location.column === column)) {
@@ -23,12 +23,12 @@ class Board extends React.Component {
         break;
       }
     }
-
+  
     if (newLocation) {
       if (isComputerPiece) {
         this.setState(prevState => ({
           computerPieceLocations: [...prevState.computerPieceLocations, newLocation]
-        }), this.handleComputerTurn);
+        }));
       } else {
         this.setState(prevState => ({
           pieceLocations: [...prevState.pieceLocations, newLocation]
@@ -36,18 +36,25 @@ class Board extends React.Component {
       }
     }
   }
-
+  
   handleComputerTurn = () => {
-    const row = Math.floor(Math.random() * 6);
-    const column = Math.floor(Math.random() * 6);
-
-    if (!this.state.pieceLocations.some(location => location.row === row && location.column === column) &&
-        !this.state.computerPieceLocations.some(location => location.row === row && location.column === column)) {
+    const { pieceLocations, computerPieceLocations } = this.state;
+    const bottomRow = 5;
+    const bottomColumn = 5;
+  
+    const availableCirclesInBottomColumn = [];
+    for (let row = 0; row <= bottomRow; row++) {
+      if (!pieceLocations.some(location => location.row === row && location.column === bottomColumn) &&
+          !computerPieceLocations.some(location => location.row === row && location.column === bottomColumn)) {
+        availableCirclesInBottomColumn.push(row);
+      }
+    }
+  
+    if (availableCirclesInBottomColumn.length > 0) {
+      const randomCircle = availableCirclesInBottomColumn[Math.floor(Math.random() * availableCirclesInBottomColumn.length)];
       this.setState(prevState => ({
-        computerPieceLocations: [...prevState.computerPieceLocations, { row, column }]
+        computerPieceLocations: [...prevState.computerPieceLocations, { row: randomCircle, column: bottomColumn }]
       }));
-    } else {
-      this.handleComputerTurn();
     }
   }
 
