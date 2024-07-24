@@ -28,12 +28,26 @@ class Board extends React.Component {
       if (isComputerPiece) {
         this.setState(prevState => ({
           computerPieceLocations: [...prevState.computerPieceLocations, newLocation]
-        }));
+        }), this.handleComputerTurn);
       } else {
         this.setState(prevState => ({
           pieceLocations: [...prevState.pieceLocations, newLocation]
-        }));
+        }), this.handleComputerTurn);
       }
+    }
+  }
+
+  handleComputerTurn = () => {
+    const row = Math.floor(Math.random() * 6);
+    const column = Math.floor(Math.random() * 6);
+
+    if (!this.state.pieceLocations.some(location => location.row === row && location.column === column) &&
+        !this.state.computerPieceLocations.some(location => location.row === row && location.column === column)) {
+      this.setState(prevState => ({
+        computerPieceLocations: [...prevState.computerPieceLocations, { row, column }]
+      }));
+    } else {
+      this.handleComputerTurn();
     }
   }
 
