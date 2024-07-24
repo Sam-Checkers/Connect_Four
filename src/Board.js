@@ -1,36 +1,39 @@
 import React from 'react';
 import './Board.css';
 import Piece from './Piece';
+import ComputerPiece from './ComputerPiece';
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pieceLocations: []
+      pieceLocations: [],
+      computerPieceLocations: []
     };
   }
 
-  handleCellClick = (rowNumber) => {
-    const { pieceLocations } = this.state;
+  handleCellClick = (rowNumber, isComputerPiece) => {
+    const { pieceLocations, computerPieceLocations } = this.state;
     let newLocation;
 
-    if (!pieceLocations.some(location => location.row === rowNumber && location.column === 5)) {
-      newLocation = { row: rowNumber, column: 5 };
-    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 4)) {
-      newLocation = { row: rowNumber, column: 4 };
-    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 3)) {
-      newLocation = { row: rowNumber, column: 3 };
-    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 2)) {
-    newLocation = { row: rowNumber, column: 2 };
-    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 1)) {
-    newLocation = { row: rowNumber, column: 1 };
-    } else if (!pieceLocations.some(location => location.row === rowNumber && location.column === 0)) {
-    newLocation = { row: rowNumber, column: 0 };
+    for (let column = 5; column >= 0; column--) {
+      if (!pieceLocations.some(location => location.row === rowNumber && location.column === column) &&
+          !computerPieceLocations.some(location => location.row === rowNumber && location.column === column)) {
+        newLocation = { row: rowNumber, column };
+        break;
+      }
     }
+
     if (newLocation) {
-      this.setState(prevState => ({
-        pieceLocations: [...prevState.pieceLocations, newLocation]
-      }));
+      if (isComputerPiece) {
+        this.setState(prevState => ({
+          computerPieceLocations: [...prevState.computerPieceLocations, newLocation]
+        }));
+      } else {
+        this.setState(prevState => ({
+          pieceLocations: [...prevState.pieceLocations, newLocation]
+        }));
+      }
     }
   }
 
@@ -45,12 +48,19 @@ class Board extends React.Component {
           <div 
             key={`${i}-${j}`} 
             className="cell"
-            onClick={() => this.handleCellClick(i)}
+            onClick={() => this.handleCellClick(i, false)}
           >
             {}
             {this.state.pieceLocations.map((location, index) => {
               if (location.row === i && location.column === j) {
                 return <Piece key={index} />;
+              }
+              return null;
+            })}
+            {}
+            {this.state.computerPieceLocations.map((location, index) => {
+              if (location.row === i && location.column === j) {
+                return <ComputerPiece key={index} />;
               }
               return null;
             })}

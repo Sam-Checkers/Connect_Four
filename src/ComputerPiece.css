@@ -1,0 +1,19 @@
+.computer-piece {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(72, 207, 83);
+    border-radius: 50%;
+  }
+
+  .computer-piece.placed {
+    pointer-events: none;
+  }
+
+  .computer-piece-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #2abe36;
+    position: absolute;
+  }
+  
